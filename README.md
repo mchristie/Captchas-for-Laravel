@@ -1,4 +1,4 @@
-Captchas-for-Laravel
+Captchas for Laravel
 ====================
 
 Super simple captcha model - generates, validates and clears Captchas. This is a very simple implementation that integrates very easily with existing form validation.
