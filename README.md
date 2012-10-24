@@ -1,12 +1,15 @@
 Captchas-for-Laravel
 ====================
 
-Super simple captcha model, generates, validates and clears captchas.
+Super simple captcha model - generates, validates and clears Captchas. This is a very simple implementation that integrates very easily with existing form validation.
+
+The captcha files are never stored, so tidying up is very minimal, simply run the ``Captcha::clear()`` function whenever the table gets too full.
 
 Installation
 ============
 
 1) Move captcha.php into your models folder.
+
 2) Put this code in your routes.php
 ```PHP
 Route::get('captcha', function() {
@@ -45,4 +48,14 @@ Clearing old captchas
 ---------------------
 ```PHP
 Captcha::clear( $days_old = 1)
+```
+
+Changing colours (optional)
+----------------
+You can change these values in captchas.php to easily modify the colours to blend in with your design nicely
+```PHP
+// Line 41
+$background_color = imagecolorallocate($image, 244,244,244);
+$text_color = imagecolorallocate($image, 84, 10, 10);
+$noise_color = imagecolorallocate($image, 189, 56, 56);
 ```
