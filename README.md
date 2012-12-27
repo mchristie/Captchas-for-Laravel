@@ -16,6 +16,11 @@ Route::get('captcha', function() {
 	return Captcha::make();
 });
 ```
+If you need to, you can customize the image using these parameters
+```PHP
+return Captcha::make( $width = 120, $height = 40, $characters = 6, $max_rotation = 25 );
+```
+
 3) Create the captcha table with this
 ```MySQL
 CREATE TABLE `<database_name>`.`captchas` (

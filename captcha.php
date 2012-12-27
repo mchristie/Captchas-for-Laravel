@@ -25,7 +25,7 @@ class Captcha extends Eloquent {
 		return $code;
 	}
 
-	public static function make($width='120',$height='40',$characters='6') {
+	public static function make($width = 120, $height = 40, $characters = 6, $max_rotation = 25) {
 		$code = self::generateCode($characters);
 		$font = path('storage').'monofont.ttf';
 
@@ -53,10 +53,17 @@ class Captcha extends Eloquent {
 		}
 
 		/* create textbox and add text */
-		$textbox = imagettfbbox($font_size, 0, $font, $code) or die('Error in imagettfbbox function');
-		$x = ($width - $textbox[4])/2;
-		$y = ($height - $textbox[5])/2;
-		imagettftext($image, $font_size, 0, $x, $y, $text_color, $font , $code) or die('Error in imagettftext function');
+		$letter_width = ($width - 10) / $characters;
+		$x_offset = 5;
+		for ($i = 0; $i < $characters; $i++) {
+			$letter = substr($code, $i, 1);
+			$textbox = imagettfbbox($font_size, 0, $font, $letter) or die('Error in imagettfbbox function');
+			$x = $x_offset + ($letter_width - $textbox[4])/2;
+			$y = ($height - $textbox[5])/2;
+			$angle = rand($max_rotation * -1, $max_rotation);
+			imagettftext($image, $font_size, $angle, $x, $y, $text_color, $font , $letter) or die('Error in imagettftext function');
+			$x_offset += $letter_width;
+		}
 
 		/* output captcha image to browser */
 		header('Content-Type: image/jpeg');
